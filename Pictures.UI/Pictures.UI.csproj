@@ -123,4 +123,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(TargetDir)images
+copy $(ProjectDir)images\*.* $(TargetDir)images</PostBuildEvent>
+  </PropertyGroup>
 </Project>
