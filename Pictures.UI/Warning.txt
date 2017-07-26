@@ -1,0 +1,3 @@
+﻿https://blogs.msdn.microsoft.com/patricka/2010/01/28/q-why-doesnt-drag-and-drop-work-when-my-application-is-running-elevated-a-mandatory-integrity-control-and-uipi/
+
+If you run notepad elevated (Right click | Run as Administrator), and you try and drag-and-drop a file from Windows Explorer, nothing happens. It looks like it is going to work because the pointer icon changes but the file doesn’t open. Weird, huh?
