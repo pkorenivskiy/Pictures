@@ -150,7 +150,7 @@
         </Grid.RowDefinitions>
 
         <GroupBox Name="PictureGroupBox" Grid.Column="0" Grid.Row="0" AllowDrop="True" Drop="PictureGroupBox_Drop">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" ToolTip="Drag Images Here" >
                 <ListBox IsSynchronizedWithCurrentItem="True"
                          Name="PicturesListBox"            
                          Style="{StaticResource PhotoListBoxStyle}"             
