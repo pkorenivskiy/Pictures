@@ -27,6 +27,8 @@ namespace Pictures.UI
         public static RoutedCommand UpKeyCommand = new RoutedCommand();
         public static RoutedCommand DownKeyCommand = new RoutedCommand();
         public static RoutedCommand BlurBtnCommand = new RoutedCommand();
+        public static RoutedCommand MenuViewCommand = new RoutedCommand();
+        public static RoutedCommand MenuDelCommand = new RoutedCommand();
 
         private int _imageIndex = -1;
 
@@ -39,11 +41,8 @@ namespace Pictures.UI
             DownKeyCommand.InputGestures.Add(new KeyGesture(Key.Down));
             BlurBtnCommand.InputGestures.Add(new KeyGesture(Key.B, ModifierKeys.Control));
 
-            //initRepo();
-
-            //var pictures = PictureRepository.GetAll();
-            //foreach (var p in pictures)
-            //    PicturesListBox.Items.Add(p);
+            MenuViewCommand.InputGestures.Add(new KeyGesture(Key.Enter));
+            MenuDelCommand.InputGestures.Add(new KeyGesture(Key.Delete));
         }
 
         private void PictureGroupBox_Drop(object sender, DragEventArgs e)
@@ -84,7 +83,7 @@ namespace Pictures.UI
             }
         }
 
-        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListBoxItem;
             if (item == null || !item.IsSelected)
@@ -117,13 +116,13 @@ namespace Pictures.UI
             }
         }
 
-        private void FullPicture_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void FullPicture_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount >= 2)
                 closeFullView();
         }
 
-#region COMMANDS
+        #region COMMANDS
         private void EscKeyCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             closeFullView();
@@ -158,6 +157,39 @@ namespace Pictures.UI
                 BlurEffect blurEffect = new BlurEffect();
                 blurEffect.KernelType = KernelType.Gaussian;
                 FullPictureImage.Effect =  blurEffect;
+            }
+        }
+
+        private void MenuViewCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (FullPictureView.Visibility != Visibility.Visible && PicturesListBox.SelectedIndex != -1)
+            {
+                var picture = PicturesListBox.Items.GetItemAt(PicturesListBox.SelectedIndex) as Picture;
+                if (picture == null)
+                    return;
+
+                _imageIndex = PicturesListBox.Items.IndexOf(picture);
+
+                FullPictureImage.Source = picture.Image;
+                PictureGroupBox.Visibility = Visibility.Collapsed;
+                FullPictureView.Visibility = Visibility.Visible;
+
+                FullPictureView.Effect = null;
+            }
+        }
+
+        private void MenuDelCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (FullPictureView.Visibility != Visibility.Visible && PicturesListBox.SelectedIndex != -1)
+            {
+                if (MessageBox.Show("Are You Sure to delete this picture", 
+                    "Question", 
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Question) == MessageBoxResult.OK)
+                {
+                    PicturesListBox.Items.RemoveAt(PicturesListBox.SelectedIndex);
+                    //TODO: need to remove from repository, but Id isn't implemented
+                }
             }
         }
 

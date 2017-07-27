@@ -137,6 +137,9 @@
         <CommandBinding Command="{x:Static local:MainWindow.UpKeyCommand}" Executed="UpKeyCommandExecuted"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.DownKeyCommand}" Executed="DownKeyCommandExecuted"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.BlurBtnCommand}" Executed="BlurBtnCommandExecuted"></CommandBinding>
+
+        <CommandBinding Command="{x:Static local:MainWindow.MenuViewCommand}" Executed="MenuViewCommandExecuted"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.MenuDelCommand}" Executed="MenuDelCommandExecuted"></CommandBinding>
     </Window.CommandBindings>
 
 
@@ -157,6 +160,12 @@
                          Margin="5" 
                          SelectionMode="Extended"                          
                          SelectedIndex="0" >
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="View" Command="{x:Static local:MainWindow.MenuViewCommand}"/>
+                            <MenuItem Header="Delete" Command="{x:Static local:MainWindow.MenuDelCommand}"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
             </ScrollViewer>
         </GroupBox>
